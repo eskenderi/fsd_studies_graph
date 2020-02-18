@@ -321,10 +321,7 @@
                     var _n = GexfJS.graph.nodeList[_e.s];
                     var _li = $("<li>");
                     $("<div>").addClass("smallpill").css("background", _n.B).appendTo(_li);
-                    $("<a>")
-                        .text(_n.l)
-                        .attr("href", "#")
-                        .mouseover(function () {
+                    $("<a>").text(_n.l).attr("href", "#").mouseover(function () {
                             GexfJS.params.activeNode = _e.s;
                         })
                         .click(function () {
@@ -372,6 +369,7 @@
                     }
                 }
             });
+
             if (_str_in.length) {
                 $('<h4>').text(strLang("inLinks")).appendTo(_html);
                 $('<ul>').html(_str_in).appendTo(_html);
@@ -380,7 +378,19 @@
                 $('<h4>').text(strLang("outLinks")).appendTo(_html);
                 $('<ul>').html(_str_out).appendTo(_html);
             }
+
             if (_str_undir.length) {
+                _str_undir.sort(function(a, b) {
+
+                    var a_num = a[0].innerText;
+                    var b_num = b[0].innerText;
+                    a_num = a_num.substr(a_num.indexOf("(")+1);
+                    b_num = b_num.substr(b_num.indexOf("(")+1);
+                    a_num = a_num.substr(0, a_num.indexOf(')')-1);
+                    b_num = b_num.substr(0, b_num.indexOf(')')-1);
+                    return parseFloat(b_num) - parseFloat(a_num);
+                });
+
                 $('<h4>').text(strLang("undirLinks")).appendTo(_html);
                 $('<ul>').html(_str_undir).appendTo(_html);
             }
@@ -789,7 +799,7 @@
                 });
 
                 GexfJS.imageMini = GexfJS.ctxMini.getImageData(0, 0, GexfJS.overviewWidth, GexfJS.overviewHeight);
-                
+
             }
         });
     }
